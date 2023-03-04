@@ -1,11 +1,11 @@
-module Affine.Data.Spherical where
+module Data.Affine.Spherical where
 
 import Prelude
-import Affine.Data.Vectors.Vector3 as V3
+import Data.Affine.Vectors.Vector3 as V3
 import Data.Number (sin, cos, atan2, acos)
 import Data.Either (Either)
-import Affine.Data.DivisionError (DivisionError)
-import Affine.Data.Division (divide)
+import Data.Affine.DivisionError (DivisionError)
+import Data.Affine.Division (divide)
 
 data Spherical = Spherical Number SphericalAngles
 

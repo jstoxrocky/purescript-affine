@@ -1,17 +1,17 @@
-module Affine.Data.TransformationMatrix where
+module Data.Affine.TransformationMatrix where
 
 import Prelude
-import Affine.Data.Vectors.Vector3 as V3
+import Data.Affine.Vectors.Vector3 as V3
 import Data.Number (sin, cos)
 import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
 import Data.Tuple (Tuple(..))
-import Affine.Data.Axis (Axis(..), X(..), Y(..), Z(..))
-import Affine.Data.RotationMatrix (RotationMatrix(..), xAxisRotation, yAxisRotation, zAxisRotation)
-import Affine.Data.Rotation (Radians(..), degreeToRadians)
+import Data.Affine.Axis (Axis(..), X(..), Y(..), Z(..))
+import Data.Affine.RotationMatrix (RotationMatrix(..), xAxisRotation, yAxisRotation, zAxisRotation)
+import Data.Affine.Rotation (Radians(..), degreeToRadians)
 import Data.Either (Either)
-import Affine.Data.DivisionError (DivisionError)
-import Affine.Data.Division (divide)
+import Data.Affine.DivisionError (DivisionError)
+import Data.Affine.Division (divide)
 
 data TransformationMatrix = TransformationMatrix
   Number

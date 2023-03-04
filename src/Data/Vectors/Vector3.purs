@@ -1,4 +1,4 @@
-module Affine.Data.Vectors.Vector3 where
+module Data.Affine.Vectors.Vector3 where
 
 import Prelude
 
@@ -9,8 +9,8 @@ import Data.Generic.Rep (class Generic)
 import Data.Number (sqrt)
 import Data.Show.Generic (genericShow)
 import Data.Traversable (class Traversable)
-import Affine.Data.Division (divide)
-import Affine.Data.DivisionError (DivisionError)
+import Data.Affine.Division (divide)
+import Data.Affine.DivisionError (DivisionError)
 
 data Vector3 a = Vector3 a a a
 

@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build": "spago build",
-    "docs": "npx spago docs"
+    "docs": "npx spago docs",
+    "test": "spago test"
   }
 }

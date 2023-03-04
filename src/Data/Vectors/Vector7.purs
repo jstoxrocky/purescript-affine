@@ -1,4 +1,4 @@
-module Affine.Data.Vectors.Vector7 where
+module Data.Affine.Vectors.Vector7 where
 
 import Prelude
 import Data.Traversable (class Traversable)
@@ -7,7 +7,7 @@ import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
 import Data.Array.NonEmpty as NE
 import Data.Tuple (Tuple(..))
-import Affine.Data.Vectors.Vector6 (Vector6(..))
+import Data.Affine.Vectors.Vector6 (Vector6(..))
 
 data Vector7 a = Vector7 a a a a a a a
 

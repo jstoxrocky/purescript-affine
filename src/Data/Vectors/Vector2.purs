@@ -1,4 +1,4 @@
-module Affine.Data.Vectors.Vector2 where
+module Data.Affine.Vectors.Vector2 where
 
 import Prelude
 import Data.Traversable (class Traversable)
@@ -6,8 +6,8 @@ import Data.Foldable (class Foldable, foldr, foldl, foldMap)
 import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
 import Data.Array.NonEmpty (NonEmptyArray, cons')
-import Affine.Data.Division (divide)
-import Affine.Data.DivisionError (DivisionError)
+import Data.Affine.Division (divide)
+import Data.Affine.DivisionError (DivisionError)
 import Data.Either (Either)
 import Data.Number (sqrt)
 

@@ -1,4 +1,4 @@
-module Affine.Data.DivisionError where
+module Data.Affine.DivisionError where
 
 import Prelude
 import Data.Generic.Rep (class Generic)
