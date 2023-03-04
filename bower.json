@@ -1,6 +1,10 @@
 {
   "name": "affine",
   "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jstoxrocky/purescript-affine.git"
+  },
   "ignore": [
     "**/.*",
     "node_modules",
