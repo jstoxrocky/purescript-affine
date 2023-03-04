@@ -1,8 +1,8 @@
-module Division where
+module Affine.Data.Division where
 
 import Prelude
 import Data.Either (Either(..))
-import DivisionError (DivisionError(..))
+import Affine.Data.DivisionError (DivisionError(..))
 
 divide
   :: Number

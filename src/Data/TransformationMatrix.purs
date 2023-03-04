@@ -1,17 +1,17 @@
-module TransformationMatrix where
+module Affine.Data.TransformationMatrix where
 
 import Prelude
-import Vector3 as V3
+import Affine.Data.Vectors.Vector3 as V3
 import Data.Number (sin, cos)
 import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
 import Data.Tuple (Tuple(..))
-import Axis (Axis(..), X(..), Y(..), Z(..))
-import RotationMatrix (RotationMatrix(..), xAxisRotation, yAxisRotation, zAxisRotation)
-import Rotation (Radians(..), degreeToRadians)
+import Affine.Data.Axis (Axis(..), X(..), Y(..), Z(..))
+import Affine.Data.RotationMatrix (RotationMatrix(..), xAxisRotation, yAxisRotation, zAxisRotation)
+import Affine.Data.Rotation (Radians(..), degreeToRadians)
 import Data.Either (Either)
-import DivisionError (DivisionError)
-import Division (divide)
+import Affine.Data.DivisionError (DivisionError)
+import Affine.Data.Division (divide)
 
 data TransformationMatrix = TransformationMatrix
   Number
@@ -48,13 +48,13 @@ setPosition
   (TransformationMatrix x11 x12 x13 _ x21 x22 x23 _ x31 x32 x33 _ x41 x42 x43 x44)
   (V3.Vector3 y11 y21 y31) = (TransformationMatrix x11 x12 x13 y11 x21 x22 x23 y21 x31 x32 x33 y31 x41 x42 x43 x44)
 
-translateMatrix :: TransformationMatrix -> V3.Vector3 Number -> TransformationMatrix
-translateMatrix
+translate :: TransformationMatrix -> V3.Vector3 Number -> TransformationMatrix
+translate
   (TransformationMatrix x11 x12 x13 x14 x21 x22 x23 x24 x31 x32 x33 x34 x41 x42 x43 x44)
   (V3.Vector3 y11 y21 y31) = (TransformationMatrix x11 x12 x13 (x14 + y11) x21 x22 x23 (x24 + y21) x31 x32 x33 (x34 + y31) x41 x42 x43 x44)
 
-scaleMatrix :: Number -> TransformationMatrix -> TransformationMatrix
-scaleMatrix
+scale :: Number -> TransformationMatrix -> TransformationMatrix
+scale
   m
   ( TransformationMatrix
       x11
@@ -93,8 +93,8 @@ scaleMatrix
       (1.0)
   )
 
-rotateMatrixAboutAxisAtPoint :: TransformationMatrix -> Number -> Axis -> TransformationMatrix
-rotateMatrixAboutAxisAtPoint m theta axis = case axis of
+rotateAboutAxisAtPoint :: TransformationMatrix -> Number -> Axis -> TransformationMatrix
+rotateAboutAxisAtPoint m theta axis = case axis of
   Xaxis y z -> rotateMatrixAboutXAxisAtPoint m theta (Tuple y z)
   Yaxis x z -> rotateMatrixAboutYAxisAtPoint m theta (Tuple x z)
   Zaxis x y -> rotateMatrixAboutZAxisAtPoint m theta (Tuple x y)

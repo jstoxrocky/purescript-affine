@@ -1,4 +1,4 @@
-module Axis where
+module Affine.Data.Axis where
 
 newtype X = X Number
 newtype Y = Y Number
