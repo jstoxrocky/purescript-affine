@@ -1,4 +1,4 @@
-module Vector4 where
+module Data.Affine.Vectors.Vector4 where
 
 import Prelude
 import Data.Traversable (class Traversable)

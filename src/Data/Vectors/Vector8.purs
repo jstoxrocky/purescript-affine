@@ -1,4 +1,4 @@
-module Vector8 where
+module Data.Affine.Vectors.Vector8 where
 
 import Prelude
 import Data.Traversable (class Traversable)
@@ -6,7 +6,7 @@ import Data.Foldable (class Foldable, foldr, foldl, foldMap)
 import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
 import Data.Array.NonEmpty as NE
-import Vector7 (Vector7(..))
+import Data.Affine.Vectors.Vector7 (Vector7(..))
 import Data.Tuple (Tuple(..))
 
 data Vector8 a = Vector8 a a a a a a a a

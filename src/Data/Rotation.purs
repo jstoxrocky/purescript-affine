@@ -1,4 +1,4 @@
-module Rotation where
+module Data.Affine.Rotation where
 
 import Prelude
 import Data.Number (pi)

@@ -1,13 +1,13 @@
-module RotationMatrix where
+module Data.Affine.RotationMatrix where
 
 import Prelude
 import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
-import Vector3 as V3
+import Data.Affine.Vectors.Vector3 as V3
 import Data.Either (Either)
-import DivisionError (DivisionError)
+import Data.Affine.DivisionError (DivisionError)
 import Data.Number (sin, cos)
-import Rotation (Radians(..))
+import Data.Affine.Rotation (Radians(..))
 
 data RotationMatrix = RotationMatrix
   Number

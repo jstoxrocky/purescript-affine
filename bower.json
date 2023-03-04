@@ -1,21 +1,26 @@
 {
-  "name": "affine",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "output"
-  ],
-  "dependencies": {
-    "purescript-prelude": "v6.0.0",
-    "purescript-console": "v6.0.0",
-    "purescript-effect": "v4.0.0"
-  },
-  "devDependencies": {
-    "purescript-psci-support": "v6.0.0",
-    "purescript-either": "^6.1.0",
-    "purescript-numbers": "^9.0.1",
-    "purescript-arrays": "^7.2.0",
-    "purescript-tuples": "^7.0.0"
-  }
+    "name": "purescript-affine",
+    "license": [
+        "BSD-3-Clause"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/jstoxrocky/purescript-affine"
+    },
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "output"
+    ],
+    "dependencies": {
+        "purescript-arrays": "^v7.2.0",
+        "purescript-console": "^v6.0.0",
+        "purescript-effect": "^v4.0.0",
+        "purescript-either": "^v6.1.0",
+        "purescript-foldable-traversable": "^v6.0.0",
+        "purescript-numbers": "^v9.0.1",
+        "purescript-prelude": "^v6.0.1",
+        "purescript-tuples": "^v7.0.0"
+    }
 }
