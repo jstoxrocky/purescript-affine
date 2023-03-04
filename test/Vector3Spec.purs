@@ -5,7 +5,7 @@ import Test.Spec (Spec, describe, it)
 import Test.Spec.Assertions (shouldEqual, fail)
 import Data.Number (sqrt)
 import Data.Either (Either(..))
-import Data.Affine.Vectors.Vector3 
+import Data.Affine.Vector3 
   ( Vector3(..)
   , lengthSquared
   , length
