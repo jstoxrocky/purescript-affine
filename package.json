@@ -8,8 +8,8 @@
     "spago": "^0.20.9"
   },
   "scripts": {
-    "build": "spago build",
+    "build": "npx spago build",
     "docs": "npx spago docs",
-    "test": "spago test"
+    "test": "npx spago test"
   }
 }

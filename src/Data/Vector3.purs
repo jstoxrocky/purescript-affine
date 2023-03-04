@@ -1,4 +1,4 @@
-module Data.Affine.Vectors.Vector3 where
+module Data.Affine.Vector3 where
 
 import Prelude
 

@@ -3,7 +3,7 @@ module Data.Affine.RotationMatrix where
 import Prelude
 import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
-import Data.Affine.Vectors.Vector3 as V3
+import Data.Affine.Vector3 as V3
 import Data.Either (Either)
 import Data.Affine.DivisionError (DivisionError)
 import Data.Number (sin, cos)

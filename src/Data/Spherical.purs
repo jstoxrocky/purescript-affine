@@ -1,7 +1,7 @@
 module Data.Affine.Spherical where
 
 import Prelude
-import Data.Affine.Vectors.Vector3 as V3
+import Data.Affine.Vector3 as V3
 import Data.Number (sin, cos, atan2, acos)
 import Data.Either (Either)
 import Data.Affine.DivisionError (DivisionError)

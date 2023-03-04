@@ -1,7 +1,7 @@
 module Data.Affine.TransformationMatrix where
 
 import Prelude
-import Data.Affine.Vectors.Vector3 as V3
+import Data.Affine.Vector3 as V3
 import Data.Number (sin, cos)
 import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
