@@ -1,6 +1,6 @@
-{ name = "affine"
+{ name = "transformation-matrix"
 , license = "BSD-3-Clause"
-, repository = "https://github.com/jstoxrocky/purescript-affine"
+, repository = "https://github.com/jstoxrocky/purescript-transformation-matrix"
 , dependencies =
   [ "aff"
   , "arrays"

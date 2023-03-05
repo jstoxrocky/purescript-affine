@@ -1,4 +1,4 @@
-module Data.Affine.DivisionError where
+module Data.TransformationMatrix.DivisionError where
 
 import Prelude
 import Data.Generic.Rep (class Generic)

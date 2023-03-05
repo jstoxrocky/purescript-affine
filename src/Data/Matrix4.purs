@@ -1,19 +1,19 @@
-module Data.Affine.TransformationMatrix where
+module Data.TransformationMatrix.Matrix4 where
 
 import Prelude
-import Data.Affine.Vector3 as V3
+import Data.TransformationMatrix.Vector3 as V3
 import Data.Number (sin, cos)
 import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
 import Data.Tuple (Tuple(..))
-import Data.Affine.Axis (Axis(..), X(..), Y(..), Z(..))
-import Data.Affine.RotationMatrix (RotationMatrix(..), xAxisRotation, yAxisRotation, zAxisRotation)
-import Data.Affine.Rotation (Radians(..), degreeToRadians)
+import Data.TransformationMatrix.Axis (Axis(..), X(..), Y(..), Z(..))
+import Data.TransformationMatrix.RotationMatrix (RotationMatrix(..), xAxisRotation, yAxisRotation, zAxisRotation)
+import Data.TransformationMatrix.Rotation (Radians(..), degreeToRadians)
 import Data.Either (Either)
-import Data.Affine.DivisionError (DivisionError)
-import Data.Affine.Division (divide)
+import Data.TransformationMatrix.DivisionError (DivisionError)
+import Data.TransformationMatrix.Division (divide)
 
-data TransformationMatrix = TransformationMatrix
+data Matrix4 = Matrix4
   Number
   Number
   Number
@@ -31,32 +31,34 @@ data TransformationMatrix = TransformationMatrix
   Number
   Number
 
-derive instance genericTransformationMatrix :: Generic TransformationMatrix _
-instance showTransformationMatrix :: Show TransformationMatrix where
+derive instance genericMatrix4 :: Generic Matrix4 _
+instance showMatrix4 :: Show Matrix4 where
   show = genericShow
 
-derive instance eqTransformationMatrix :: Eq TransformationMatrix
+derive instance eqMatrix4 :: Eq Matrix4
 
-toArray :: TransformationMatrix -> Array Number
-toArray (TransformationMatrix x11 x12 x13 x14 x21 x22 x23 x24 x31 x32 x33 x34 x41 x42 x43 x44) = [ x11, x12, x13, x14, x21, x22, x23, x24, x31, x32, x33, x34, x41, x42, x43, x44 ]
+toArray :: Matrix4 -> Array Number
+toArray (Matrix4 x11 x12 x13 x14 x21 x22 x23 x24 x31 x32 x33 x34 x41 x42 x43 x44) = [ x11, x12, x13, x14, x21, x22, x23, x24, x31, x32, x33, x34, x41, x42, x43, x44 ]
 
-getPosition :: TransformationMatrix -> V3.Vector3 Number
-getPosition (TransformationMatrix _ _ _ x14 _ _ _ x24 _ _ _ x34 _ _ _ _) = V3.Vector3 x14 x24 x34
+getPosition :: Matrix4 -> V3.Vector3 Number
+getPosition (Matrix4 _ _ _ x14 _ _ _ x24 _ _ _ x34 _ _ _ _) = V3.Vector3 x14 x24 x34
 
-setPosition :: TransformationMatrix -> V3.Vector3 Number -> TransformationMatrix
+setPosition :: V3.Vector3 Number -> Matrix4 -> Matrix4
 setPosition
-  (TransformationMatrix x11 x12 x13 _ x21 x22 x23 _ x31 x32 x33 _ x41 x42 x43 x44)
-  (V3.Vector3 y11 y21 y31) = (TransformationMatrix x11 x12 x13 y11 x21 x22 x23 y21 x31 x32 x33 y31 x41 x42 x43 x44)
+  (V3.Vector3 y11 y21 y31)
+  (Matrix4 x11 x12 x13 _ x21 x22 x23 _ x31 x32 x33 _ x41 x42 x43 x44)
+  = (Matrix4 x11 x12 x13 y11 x21 x22 x23 y21 x31 x32 x33 y31 x41 x42 x43 x44)
 
-translate :: TransformationMatrix -> V3.Vector3 Number -> TransformationMatrix
+translate :: V3.Vector3 Number -> Matrix4 -> Matrix4
 translate
-  (TransformationMatrix x11 x12 x13 x14 x21 x22 x23 x24 x31 x32 x33 x34 x41 x42 x43 x44)
-  (V3.Vector3 y11 y21 y31) = (TransformationMatrix x11 x12 x13 (x14 + y11) x21 x22 x23 (x24 + y21) x31 x32 x33 (x34 + y31) x41 x42 x43 x44)
+  (V3.Vector3 y11 y21 y31)
+  (Matrix4 x11 x12 x13 x14 x21 x22 x23 x24 x31 x32 x33 x34 x41 x42 x43 x44)
+  = (Matrix4 x11 x12 x13 (x14 + y11) x21 x22 x23 (x24 + y21) x31 x32 x33 (x34 + y31) x41 x42 x43 x44)
 
-scale :: Number -> TransformationMatrix -> TransformationMatrix
+scale :: Number -> Matrix4 -> Matrix4
 scale
   m
-  ( TransformationMatrix
+  ( Matrix4
       x11
       x12
       x13
@@ -74,7 +76,7 @@ scale
       _
       _
   ) =
-  ( TransformationMatrix
+  ( Matrix4
       (m * x11)
       x12
       x13
@@ -93,35 +95,35 @@ scale
       (1.0)
   )
 
-rotateAboutAxisAtPoint :: TransformationMatrix -> Number -> Axis -> TransformationMatrix
+rotateAboutAxisAtPoint :: Matrix4 -> Number -> Axis -> Matrix4
 rotateAboutAxisAtPoint m theta axis = case axis of
   Xaxis y z -> rotateMatrixAboutXAxisAtPoint m theta (Tuple y z)
   Yaxis x z -> rotateMatrixAboutYAxisAtPoint m theta (Tuple x z)
   Zaxis x y -> rotateMatrixAboutZAxisAtPoint m theta (Tuple x y)
 
 rotateMatrixXAxis
-  :: TransformationMatrix
+  :: Matrix4
   -> Radians
-  -> TransformationMatrix
+  -> Matrix4
 rotateMatrixXAxis matrix radians = applyRotationMatrix matrix (xAxisRotation radians)
 
 rotateMatrixYAxis
-  :: TransformationMatrix
+  :: Matrix4
   -> Radians
-  -> TransformationMatrix
+  -> Matrix4
 rotateMatrixYAxis matrix radians = applyRotationMatrix matrix (yAxisRotation radians)
 
 rotateMatrixZAxis
-  :: TransformationMatrix
+  :: Matrix4
   -> Radians
-  -> TransformationMatrix
+  -> Matrix4
 rotateMatrixZAxis matrix radians = applyRotationMatrix matrix (zAxisRotation radians)
 
 rotateMatrixAboutXAxisAtPoint
-  :: TransformationMatrix
+  :: Matrix4
   -> Number
   -> Tuple Y Z
-  -> TransformationMatrix
+  -> Matrix4
 rotateMatrixAboutXAxisAtPoint matrix degrees (Tuple (Y y) (Z z)) = offsetMatrix
   where
   radians@(Radians theta) = degreeToRadians degrees
@@ -130,13 +132,13 @@ rotateMatrixAboutXAxisAtPoint matrix degrees (Tuple (Y y) (Z z)) = offsetMatrix
     0.0
     ((-y) * (cos theta) + z * (sin theta) + y)
     ((-y) * (sin theta) + (-z) * (cos theta) + z)
-  offsetMatrix = setPosition rotatedMatrix offset
+  offsetMatrix = setPosition offset rotatedMatrix
 
 rotateMatrixAboutYAxisAtPoint
-  :: TransformationMatrix
+  :: Matrix4
   -> Number
   -> Tuple X Z
-  -> TransformationMatrix
+  -> Matrix4
 rotateMatrixAboutYAxisAtPoint matrix degrees (Tuple (X x) (Z z)) = offsetMatrix
   where
   radians@(Radians theta) = degreeToRadians degrees
@@ -145,13 +147,13 @@ rotateMatrixAboutYAxisAtPoint matrix degrees (Tuple (X x) (Z z)) = offsetMatrix
     ((-x) * (cos theta) + z * (sin theta) + x)
     0.0
     ((-x) * (sin theta) + (-z) * (cos theta) + z)
-  offsetMatrix = setPosition rotatedMatrix offset
+  offsetMatrix = setPosition offset rotatedMatrix
 
 rotateMatrixAboutZAxisAtPoint
-  :: TransformationMatrix
+  :: Matrix4
   -> Number
   -> Tuple X Y
-  -> TransformationMatrix
+  -> Matrix4
 rotateMatrixAboutZAxisAtPoint matrix degrees (Tuple (X x) (Y y)) = offsetMatrix
   where
   radians@(Radians theta) = degreeToRadians degrees
@@ -160,39 +162,39 @@ rotateMatrixAboutZAxisAtPoint matrix degrees (Tuple (X x) (Y y)) = offsetMatrix
     ((-x) * (cos theta) + y * (sin theta) + x)
     ((-x) * (sin theta) + (-y) * (cos theta) + y)
     0.0
-  offsetMatrix = setPosition rotatedMatrix offset
+  offsetMatrix = setPosition offset rotatedMatrix
 
-identityT :: TransformationMatrix
-identityT = TransformationMatrix 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0
+identity4 :: Matrix4
+identity4 = Matrix4 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0
 
 applyRotationMatrix
-  :: TransformationMatrix
+  :: Matrix4
   -> RotationMatrix
-  -> TransformationMatrix
+  -> Matrix4
 applyRotationMatrix
-  (TransformationMatrix _ _ _ x14 _ _ _ x24 _ _ _ x34 x41 x42 x43 x44)
-  (RotationMatrix x11 x12 x13 x21 x22 x23 x31 x32 x33) = (TransformationMatrix x11 x12 x13 x14 x21 x22 x23 x24 x31 x32 x33 x34 x41 x42 x43 x44)
+  (Matrix4 _ _ _ x14 _ _ _ x24 _ _ _ x34 x41 x42 x43 x44)
+  (RotationMatrix x11 x12 x13 x21 x22 x23 x31 x32 x33) = (Matrix4 x11 x12 x13 x14 x21 x22 x23 x24 x31 x32 x33 x34 x41 x42 x43 x44)
 
 getXColumn
-  :: TransformationMatrix
+  :: Matrix4
   -> V3.Vector3 Number
-getXColumn (TransformationMatrix x11 _ _ _ x21 _ _ _ x31 _ _ _ _ _ _ _) = V3.Vector3 x11 x21 x31
+getXColumn (Matrix4 x11 _ _ _ x21 _ _ _ x31 _ _ _ _ _ _ _) = V3.Vector3 x11 x21 x31
 
 getYColumn
-  :: TransformationMatrix
+  :: Matrix4
   -> V3.Vector3 Number
-getYColumn (TransformationMatrix _ x12 _ _ _ x22 _ _ _ x32 _ _ _ _ _ _) = V3.Vector3 x12 x22 x32
+getYColumn (Matrix4 _ x12 _ _ _ x22 _ _ _ x32 _ _ _ _ _ _) = V3.Vector3 x12 x22 x32
 
 getZColumn
-  :: TransformationMatrix
+  :: Matrix4
   -> V3.Vector3 Number
-getZColumn (TransformationMatrix _ _ x13 _ _ _ x23 _ _ _ x33 _ _ _ _ _) = V3.Vector3 x13 x23 x33
+getZColumn (Matrix4 _ _ x13 _ _ _ x23 _ _ _ x33 _ _ _ _ _) = V3.Vector3 x13 x23 x33
 
 -- https://github.com/mrdoob/three.js/blob/4503ef10b81a00f5c6c64fe9a856881ee31fe6a3/src/math/Matrix4.js#L484
 invert
-  :: TransformationMatrix
-  -> Either DivisionError TransformationMatrix
-invert (TransformationMatrix x11 x12 x13 x14 x21 x22 x23 x24 x31 x32 x33 x34 x41 x42 x43 x44) = do
+  :: Matrix4
+  -> Either DivisionError Matrix4
+invert (Matrix4 x11 x12 x13 x14 x21 x22 x23 x24 x31 x32 x33 x34 x41 x42 x43 x44) = do
   let
     t11 = x23 * x34 * x42 - x24 * x33 * x42 + x24 * x32 * x43 - x22 * x34 * x43 - x23 * x32 * x44 + x22 * x33 * x44
     t12 = x14 * x33 * x42 - x13 * x34 * x42 - x14 * x32 * x43 + x12 * x34 * x43 + x13 * x32 * x44 - x12 * x33 * x44
@@ -220,15 +222,15 @@ invert (TransformationMatrix x11 x12 x13 x14 x21 x22 x23 x24 x31 x32 x33 x34 x41
     x42' = (x12 * x33 * x41 - x13 * x32 * x41 + x13 * x31 * x42 - x11 * x33 * x42 - x12 * x31 * x43 + x11 * x32 * x43) * inverseDeterminant
     x43' = (x13 * x22 * x41 - x12 * x23 * x41 - x13 * x21 * x42 + x11 * x23 * x42 + x12 * x21 * x43 - x11 * x22 * x43) * inverseDeterminant
     x44' = (x12 * x23 * x31 - x13 * x22 * x31 + x13 * x21 * x32 - x11 * x23 * x32 - x12 * x21 * x33 + x11 * x22 * x33) * inverseDeterminant
-  pure $ TransformationMatrix x11' x12' x13' x14' x21' x22' x23' x24' x31' x32' x33' x34' x41' x42' x43' x44'
+  pure $ Matrix4 x11' x12' x13' x14' x21' x22' x23' x24' x31' x32' x33' x34' x41' x42' x43' x44'
 
 -- https://github.com/mrdoob/three.js/blob/4503ef10b81a00f5c6c64fe9a856881ee31fe6a3/src/math/Vector3.js#L237
 applyMatrix4
-  :: TransformationMatrix
+  :: Matrix4
   -> V3.Vector3 Number
   -> Either DivisionError (V3.Vector3 Number)
 applyMatrix4
-  (TransformationMatrix x11 x12 x13 x14 x21 x22 x23 x24 x31 x32 x33 x34 x41 x42 x43 x44)
+  (Matrix4 x11 x12 x13 x14 x21 x22 x23 x24 x31 x32 x33 x34 x41 x42 x43 x44)
   (V3.Vector3 vx vy vz) = do
   w <- divide 1.0 $ (x41 * vx) + (x42 * vy) + (x43 * vz) + x44
   let
@@ -238,11 +240,11 @@ applyMatrix4
   pure $ V3.Vector3 x y z
 
 multiply
-  :: TransformationMatrix
-  -> TransformationMatrix
-  -> TransformationMatrix
+  :: Matrix4
+  -> Matrix4
+  -> Matrix4
 multiply
-  ( TransformationMatrix
+  ( Matrix4
       x11
       x12
       x13
@@ -260,7 +262,7 @@ multiply
       _
       _
   )
-  ( TransformationMatrix
+  ( Matrix4
       y11
       y12
       y13
@@ -277,7 +279,7 @@ multiply
       _
       _
       _
-  ) = TransformationMatrix
+  ) = Matrix4
   (x11 * y11 + x12 * y21 + x13 * y31)
   (x11 * y12 + x12 * y22 + x13 * y32)
   (x11 * y13 + x12 * y23 + x13 * y33)
@@ -297,9 +299,9 @@ multiply
 
 inverseAfterTranslation
   :: V3.Vector3 Number
-  -> TransformationMatrix
-  -> TransformationMatrix
+  -> Matrix4
+  -> Matrix4
 inverseAfterTranslation translation inverse = multiply inverse identityWithReverseTranslation
   where
   reverseTranslation = V3.multiplyByScalar (-1.0) translation
-  identityWithReverseTranslation = setPosition identityT reverseTranslation
+  identityWithReverseTranslation = setPosition reverseTranslation identity4
