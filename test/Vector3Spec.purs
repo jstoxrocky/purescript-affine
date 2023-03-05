@@ -2,7 +2,7 @@ module Test.Vector3Spec where
 
 import Prelude hiding (add)
 import Test.Spec (Spec, describe, it)
-import Test.Spec.Assertions (shouldEqual, fail)
+import Test.Spec.Assertions (shouldEqual)
 import Data.Number (sqrt)
 import Data.Either (Either(..))
 import Data.TransformationMatrix.Vector3 
@@ -106,14 +106,11 @@ vector3Spec = do
         vector3 = Vector3 1.0 3.0 2.0
       
         -- Expectations
-        expectedResult = Vector3 0.5 1.5 1.0
+        expectedResult = Right $ Vector3 0.5 1.5 1.0
 
         -- Test
-        maybeResult = divideByScalar 2.0 vector3
-      case maybeResult of
-        Left err -> fail $ show err
-        Right result -> do
-          result `shouldEqual` expectedResult
+        result = divideByScalar 2.0 vector3
+      result `shouldEqual` expectedResult
 
     it "should multiply by scalar" do
       let
@@ -134,14 +131,11 @@ vector3Spec = do
       
         -- Expectations
         len = length vector3
-        expectedResult = Vector3 (1.0 / len) (2.0 / len) (4.0 / len)
+        expectedResult = Right $ Vector3 (1.0 / len) (2.0 / len) (4.0 / len)
 
         -- Test
-        maybeResult = normalize vector3
-      case maybeResult of
-        Left err -> fail $ show err
-        Right result -> do
-          result `shouldEqual` expectedResult
+        result = normalize vector3
+      result `shouldEqual` expectedResult
     
     it "should calculate the distance squared between two Vector3s" do
       let
