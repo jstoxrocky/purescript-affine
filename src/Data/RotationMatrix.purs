@@ -3,7 +3,7 @@ module Data.TransformationMatrix.RotationMatrix where
 import Prelude
 import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
-import Data.TransformationMatrix.Vector3 as V3
+import Data.TransformationMatrix.Vector3 (Vector3(..), normalize, subtract, crossProduct)
 import Data.Either (Either)
 import Data.TransformationMatrix.DivisionError (DivisionError)
 import Data.Number (sin, cos)
@@ -26,17 +26,17 @@ instance showRotationMatrix :: Show RotationMatrix where
 
 derive instance eqRotationMatrix :: Eq RotationMatrix
 
-up :: V3.Vector3 Number
-up = V3.Vector3 0.0 1.0 0.0
+up :: Vector3 Number
+up = Vector3 0.0 1.0 0.0
 
 lookAtRotation
-  :: V3.Vector3 Number
-  -> V3.Vector3 Number
+  :: Vector3 Number
+  -> Vector3 Number
   -> Either DivisionError RotationMatrix
 lookAtRotation eye target = do
-  zAxis@(V3.Vector3 zAxisX zAxisY zAxisZ) <- V3.normalize $ (V3.subtract eye target)
-  xAxis@(V3.Vector3 xAxisX xAxisY xAxisZ) <- V3.normalize $ (V3.crossProduct up zAxis)
-  (V3.Vector3 yAxisX yAxisY yAxisZ) <- V3.normalize $ (V3.crossProduct zAxis xAxis)
+  zAxis@(Vector3 zAxisX zAxisY zAxisZ) <- normalize $ (subtract eye target)
+  xAxis@(Vector3 xAxisX xAxisY xAxisZ) <- normalize $ (crossProduct up zAxis)
+  (Vector3 yAxisX yAxisY yAxisZ) <- normalize $ (crossProduct zAxis xAxis)
   pure $ RotationMatrix
     xAxisX
     yAxisX

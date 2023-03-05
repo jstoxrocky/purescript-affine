@@ -1,7 +1,7 @@
 module Data.TransformationMatrix.Spherical where
 
 import Prelude
-import Data.TransformationMatrix.Vector3 as V3
+import Data.TransformationMatrix.Vector3 (Vector3(..), length)
 import Data.Number (sin, cos, atan2, acos)
 import Data.Either (Either)
 import Data.TransformationMatrix.DivisionError (DivisionError)
@@ -13,8 +13,8 @@ data SphericalAngles = SphericalAngles Number Number
 
 sphericalAnglesToVector3
   :: Spherical
-  -> V3.Vector3 Number
-sphericalAnglesToVector3 (Spherical radius (SphericalAngles theta phi)) = V3.Vector3 x y z
+  -> Vector3 Number
+sphericalAnglesToVector3 (Spherical radius (SphericalAngles theta phi)) = Vector3 x y z
   where
   sinPhiRadius = (sin phi) * radius
   x = sinPhiRadius * (sin theta)
@@ -22,11 +22,11 @@ sphericalAnglesToVector3 (Spherical radius (SphericalAngles theta phi)) = V3.Vec
   z = sinPhiRadius * (cos theta)
 
 vector3ToSpherical
-  :: V3.Vector3 Number
+  :: Vector3 Number
   -> Either DivisionError Spherical
-vector3ToSpherical offset@(V3.Vector3 x y z) = do
+vector3ToSpherical offset@(Vector3 x y z) = do
   let
-    radius = V3.length offset
+    radius = length offset
     theta = atan2 x z
   phi <- acos <$> divide y radius
   pure $ Spherical radius $ SphericalAngles theta phi
