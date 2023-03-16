@@ -2,7 +2,7 @@
   "name": "transformation-matrix",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT",
+  "license": "BSD-3-Clause",
   "devDependencies": {
     "purescript": "^0.15.7",
     "spago": "^0.20.9"
