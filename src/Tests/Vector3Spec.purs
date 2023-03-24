@@ -1,11 +1,11 @@
-module Test.Vector3Spec where
+module TransformationMatrix.Tests.Vector3Spec where
 
 import Prelude hiding (add)
 import Test.Spec (Spec, describe, it)
 import Test.Spec.Assertions (shouldEqual)
 import Data.Number (sqrt)
 import Data.Either (Either(..))
-import Data.TransformationMatrix.Vector3 
+import TransformationMatrix.Data.Vector3 
   ( Vector3(..)
   , lengthSquared
   , length

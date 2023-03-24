@@ -1,4 +1,4 @@
-module Data.TransformationMatrix.Axis where
+module TransformationMatrix.Data.Axis where
 
 newtype X = X Number
 newtype Y = Y Number

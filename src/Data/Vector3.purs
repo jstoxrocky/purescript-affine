@@ -1,4 +1,4 @@
-module Data.TransformationMatrix.Vector3 where
+module TransformationMatrix.Data.Vector3 where
 
 import Prelude
 
@@ -9,8 +9,8 @@ import Data.Generic.Rep (class Generic)
 import Data.Number (sqrt)
 import Data.Show.Generic (genericShow)
 import Data.Traversable (class Traversable)
-import Data.TransformationMatrix.Division (divide)
-import Data.TransformationMatrix.DivisionError (DivisionError)
+import TransformationMatrix.Services.Division (divide)
+import TransformationMatrix.Data.DivisionError (DivisionError)
 
 data Vector3 a = Vector3 a a a
 

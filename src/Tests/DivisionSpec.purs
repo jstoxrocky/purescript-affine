@@ -1,11 +1,11 @@
-module Test.DivisionSpec where
+module TransformationMatrix.Tests.DivisionSpec where
 
 import Prelude
 import Test.Spec (Spec, describe, it)
 import Test.Spec.Assertions (shouldEqual)
 import Data.Either (Either(..))
-import Data.TransformationMatrix.Division (divide)
-import Data.TransformationMatrix.DivisionError (DivisionError(..))
+import TransformationMatrix.Services.Division (divide)
+import TransformationMatrix.Data.DivisionError (DivisionError(..))
 
 divisionSpec :: Spec Unit
 divisionSpec = do
