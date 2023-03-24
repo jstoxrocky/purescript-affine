@@ -1,13 +1,13 @@
-module Data.TransformationMatrix.RotationMatrix where
+module TransformationMatrix.Data.RotationMatrix where
 
 import Prelude
 import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
-import Data.TransformationMatrix.Vector3 (Vector3(..), normalize, subtract, crossProduct)
+import TransformationMatrix.Data.Vector3 (Vector3(..), normalize, subtract, crossProduct)
 import Data.Either (Either)
-import Data.TransformationMatrix.DivisionError (DivisionError)
+import TransformationMatrix.Data.DivisionError (DivisionError)
 import Data.Number (sin, cos)
-import Data.TransformationMatrix.Rotation (Radians(..))
+import TransformationMatrix.Data.Radians (Radians(..))
 
 data RotationMatrix = RotationMatrix
   Number

@@ -1,17 +1,17 @@
-module Data.TransformationMatrix.Matrix4 where
+module TransformationMatrix.Data.Matrix4 where
 
 import Prelude
-import Data.TransformationMatrix.Vector3 (Vector3(..), multiplyByScalar)
+import TransformationMatrix.Data.Vector3 (Vector3(..), multiplyByScalar)
 import Data.Number (sin, cos)
 import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
 import Data.Tuple (Tuple(..))
-import Data.TransformationMatrix.Axis (Axis(..), X(..), Y(..), Z(..))
-import Data.TransformationMatrix.RotationMatrix (RotationMatrix(..), xAxisRotation, yAxisRotation, zAxisRotation)
-import Data.TransformationMatrix.Rotation (Radians(..), degreeToRadians)
+import TransformationMatrix.Data.Axis (Axis(..), X(..), Y(..), Z(..))
+import TransformationMatrix.Data.RotationMatrix (RotationMatrix(..), xAxisRotation, yAxisRotation, zAxisRotation)
+import TransformationMatrix.Data.Radians (Radians(..), degreeToRadians)
 import Data.Either (Either)
-import Data.TransformationMatrix.DivisionError (DivisionError)
-import Data.TransformationMatrix.Division (divide)
+import TransformationMatrix.Data.DivisionError (DivisionError)
+import TransformationMatrix.Services.Division (divide)
 
 data Matrix4 = Matrix4
   Number

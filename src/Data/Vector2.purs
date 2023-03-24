@@ -1,4 +1,4 @@
-module Data.TransformationMatrix.Vector2 where
+module TransformationMatrix.Data.Vector2 where
 
 import Prelude
 import Data.Traversable (class Traversable)
@@ -6,8 +6,8 @@ import Data.Foldable (class Foldable, foldr, foldl, foldMap)
 import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
 import Data.Array.NonEmpty (NonEmptyArray, cons')
-import Data.TransformationMatrix.Division (divide)
-import Data.TransformationMatrix.DivisionError (DivisionError)
+import TransformationMatrix.Services.Division (divide)
+import TransformationMatrix.Data.DivisionError (DivisionError)
 import Data.Either (Either)
 import Data.Number (sqrt)
 

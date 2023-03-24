@@ -1,10 +1,10 @@
-module Test.Matrix4Spec where
+module TransformationMatrix.Tests.Matrix4Spec where
 
 import Prelude hiding (add)
 import Test.Spec (Spec, describe, it)
 import Test.Spec.Assertions (shouldEqual)
-import Data.TransformationMatrix.Vector3 (Vector3(..))
-import Data.TransformationMatrix.Matrix4 
+import TransformationMatrix.Data.Vector3 (Vector3(..))
+import TransformationMatrix.Data.Matrix4 
   ( Matrix4(..)
   , translate
   , toArray
