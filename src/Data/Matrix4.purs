@@ -1,7 +1,7 @@
 module TransformationMatrix.Data.Matrix4 where
 
 import Prelude
-import TransformationMatrix.Data.Vector3 (Vector3(..), multiplyByScalar)
+import TransformationMatrix.Data.Vector3 (Vector3(..), multiplyByScalar, normalize)
 import Data.Number (sin, cos)
 import Data.Generic.Rep (class Generic)
 import Data.Show.Generic (genericShow)
@@ -238,6 +238,20 @@ applyMatrix4
     y = ((x21 * vx) + (x22 * vy) + (x23 * vz) + x24) * w
     z = ((x31 * vx) + (x32 * vy) + (x33 * vz) + x34) * w
   pure $ Vector3 x y z
+
+-- https://github.com/mrdoob/three.js/blob/47b28bc564b438bf2b80d6e5baf90235292fcbd7/src/math/Vector3.js#L286
+transformDirection
+  :: Matrix4
+  -> Vector3 Number
+  -> Either DivisionError (Vector3 Number)
+transformDirection
+  (Matrix4 x11 x12 x13 _ x21 x22 x23 _ x31 x32 x33 _ _ _ _ _)
+  (Vector3 vx vy vz) = do
+  let
+    x = ((x11 * vx) + (x12 * vy) + (x13 * vz))
+    y = ((x21 * vx) + (x22 * vy) + (x23 * vz))
+    z = ((x31 * vx) + (x32 * vy) + (x33 * vz))
+  normalize $ Vector3 x y z
 
 multiply
   :: Matrix4
