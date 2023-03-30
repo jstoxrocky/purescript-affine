@@ -10,7 +10,9 @@ import TransformationMatrix.Data.Matrix4
   , toArray
   , getPosition
   , setPosition
-  , scale )
+  , scale
+  , applyMatrix4 )
+import Data.Number (sin, cos, pi)
 
 matrix4Spec :: Spec Unit
 matrix4Spec = do
@@ -112,4 +114,22 @@ matrix4Spec = do
         
         -- Test
         result = scale multiplier matrix
+      result `shouldEqual` expectedResult
+
+    it "should applyMatrix4 to a Vector3" do
+      let
+        -- Setup
+        radians = pi / 2.0
+        matrix = Matrix4
+          1.0 0.0           0.0              0.0
+          0.0 (cos radians) (-(sin radians)) 0.0
+          0.0 (sin radians) (cos radians)    0.0
+          0.0 0.0           0.0              1.0
+        vector = Vector3 1.0 2.0 3.0
+      
+        -- Expectations
+        expectedResult = pure $ Vector3 1.0 (-3.0) 2.0
+        
+        -- Test
+        result = applyMatrix4 matrix vector
       result `shouldEqual` expectedResult
