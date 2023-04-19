@@ -108,3 +108,9 @@ distanceBetweenSquared
   -> Vector3 Number
   -> Number
 distanceBetweenSquared v1 v2 = lengthSquared $ subtract v1 v2
+
+distance
+  :: Vector3 Number
+  -> Vector3 Number
+  -> Number
+distance v1 v2 = length $ subtract v1 v2
