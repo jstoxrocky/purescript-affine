@@ -45,6 +45,12 @@ toNonEmptyArray (Vector3 x1 x2 x3) = cons' x1 [ x2, x3 ]
 toArray :: forall a. Vector3 a -> Array a
 toArray (Vector3 x1 x2 x3) = [ x1, x2, x3 ]
 
+toXYZ
+  :: forall a
+  . Vector3 a 
+  -> { x :: a, y :: a, z :: a }
+toXYZ (Vector3 x1 x2 x3) = { x: x1, y: x2, z: x3 }
+
 lengthSquared
   :: Vector3 Number
   -> Number
