@@ -13,6 +13,9 @@ import Data.Either (Either)
 import TransformationMatrix.Data.DivisionError (DivisionError)
 import TransformationMatrix.Services.Division (divide)
 
+origin :: Vector3 Number
+origin = Vector3 0.0 0.0 0.0
+
 data Matrix4 = Matrix4
   Number
   Number
@@ -238,6 +241,11 @@ applyMatrix4
     y = ((x21 * vx) + (x22 * vy) + (x23 * vz) + x24) * w
     z = ((x31 * vx) + (x32 * vy) + (x33 * vz) + x34) * w
   pure $ Vector3 x y z
+
+getWorldPosition
+  :: Matrix4
+  -> Either DivisionError (Vector3 Number)
+getWorldPosition matrix = applyMatrix4 matrix origin
 
 -- https://github.com/mrdoob/three.js/blob/47b28bc564b438bf2b80d6e5baf90235292fcbd7/src/math/Vector3.js#L286
 transformDirection
